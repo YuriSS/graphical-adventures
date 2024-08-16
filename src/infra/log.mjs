@@ -29,7 +29,7 @@ export class LogBuilder {
 
   #displayX = (x) => {
     const log = this.#getLog(x);
-    console.log(`[${log.getScope().getValue()}] ${log.getMessage() }`);
+    console.log(`[${log.getScope().getValue()}] `, log.getMessage());
   }
 }
 
@@ -37,7 +37,7 @@ class Log {
   #scope; #message;
 
   constructor(scope, message) {
-    if (scope?.constructor !== LogScope || message?.constructor !== String) {
+    if (scope?.constructor !== LogScope) {
       throw new Error('[Log] Invalid arguments');
     }
 
