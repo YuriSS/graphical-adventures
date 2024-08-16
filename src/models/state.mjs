@@ -2,15 +2,38 @@ import { LogBuilder, logScopeEnum } from "../infra/log.mjs";
 import { Theme, themeEnum } from "./theme.mjs";
 import { Screen } from "./screen.mjs";
 
+export class StateProps {
+  #opts = {
+    screen: new Screen(60),
+    theme: themeEnum.DARK
+  };
+
+  constructor(opts, logApp) {
+    if (logApp?.constructor !== LogBuilder) {
+      throw new Error(`[State props] Invalid log type ${logApp}`);
+    }
+
+    this.#opts.screen = screenLoader(opts.screen, this.#opts.screen);
+    logApp.log(logScopeEnum.INFO, `Screen initialized`);
+
+    this.#opts.theme = themeLoader(opts.theme, this.#opts.theme, logApp);
+    logApp.log(logScopeEnum.INFO, `Theme ${this.#opts.theme.getName()} initialized`);
+  }
+
+  getOpts = () => this.#opts;
+}
+
 export class State {
-  #theme; #logBuilder; #screen; #ctx; #canvas;
+  #theme; #logBuilder; #screen;
 
-  constructor(canvasId, theme) {
+  #ctx; #canvas;
+
+  constructor(canvasId, opts) {
     this.#logBuilder = new LogBuilder();
-    this.#screen = new Screen();
 
-    this.#theme = themeLoader(theme, this.#logBuilder);
-    this.log(logScopeEnum.INFO, `Theme ${this.#theme.getName()} initialized`);
+    const { theme, screen } = new StateProps(opts, this.#logBuilder).getOpts();
+    this.#theme = theme;
+    this.#screen = screen;
 
     const canvasResult = canvasLoader(canvasId);
     this.#canvas = canvasResult.canvas;
@@ -28,18 +51,36 @@ export class State {
   log = (...args) => this.#logBuilder.log(...args);
 }
 
-function themeLoader(theme, logApp) {
+function themeLoader(theme, defaultTheme, logApp) {
   if (logApp?.constructor !== LogBuilder) {
     throw new Error(`[Theme loader] Invalid log type ${logApp}`);
   }
+
   if (theme?.constructor !== Theme) {
+    if (defaultTheme?.constructor !== Theme) {
+      throw new Error(`[Theme loader] Invalid default theme type ${theme}`);
+    }
+
     logApp.log(
       logScopeEnum.WARN,
       `Invalid theme ${theme}. Using default theme`
     );
-    return themeEnum.DARK;
+    return defaultTheme;
   }
+
   return theme;
+}
+
+function screenLoader(screen, defaultScreen) {
+  if (screen?.constructor === Screen) {
+    return screen;
+  }
+
+  if (defaultScreen?.constructor !== Screen) {
+    throw new Error(`[Screen loader] Invalid screen type ${screen}`);
+  }
+
+  return defaultScreen;
 }
 
 function canvasLoader(canvasId) {
