@@ -1,4 +1,5 @@
-import { LogBuilder, logScopeEnum } from "../infra/log.mjs";
+import { logScopeEnum } from "../infra/log/log-scope.mjs";
+import { LogBuilder } from "../infra/log/index.mjs";
 import { Theme, themeEnum } from "./theme.mjs";
 import { Screen } from "./screen.mjs";
 
@@ -24,13 +25,12 @@ export class StateProps {
 }
 
 export class State {
-  #theme; #logBuilder; #screen;
+  #logBuilder = new LogBuilder();
+  #theme; ; #screen;
 
   #ctx; #canvas;
 
   constructor(canvasId, opts) {
-    this.#logBuilder = new LogBuilder();
-
     const { theme, screen } = new StateProps(opts, this.#logBuilder).getOpts();
     this.#theme = theme;
     this.#screen = screen;
@@ -39,16 +39,14 @@ export class State {
     this.#canvas = canvasResult.canvas;
     this.#ctx = canvasResult.ctx;
 
-    this.log(logScopeEnum.INFO, `Canvas context loaded`);
-    this.log(logScopeEnum.INFO, `State initialized`);
+    this.#logBuilder.info("Canvas context loaded");
+    this.#logBuilder.info("State initialized");
   }
 
   getTheme = () => this.#theme;
   getScreen = () => this.#screen;
   getCanvas = () => this.#canvas;
   ctx = () => this.#ctx;
-
-  log = (...args) => this.#logBuilder.log(...args);
 }
 
 function themeLoader(theme, defaultTheme, logApp) {
