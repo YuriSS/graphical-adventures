@@ -18,22 +18,28 @@ export class BiVector {
   add = (vector) => {
     this.#x += vector.x();
     this.#y += vector.y();
+    return this;
   };
 
   subtract = (vector) => {
     this.#x -= vector.x();
     this.#y -= vector.y();
+    return this;
   };
 
   multiply = (scalar) => {
     this.#x *= scalar;
     this.#y *= scalar;
+    return this;
   };
 
   divide = (scalar) => {
     this.#x /= scalar;
     this.#y /= scalar;
+    return this;
   };
 
   magnitude = () => Math.sqrt(this.#x ** 2 + this.#y ** 2);
+
+  toString() { return `{${this.#x}, ${this.#y}}` };
 }
