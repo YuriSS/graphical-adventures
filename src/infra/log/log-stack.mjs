@@ -17,6 +17,7 @@ export class LogStack {
     }
     if (log.isOnly()) {
       this.#onlyStack = true;
+      this.#logs = [];
     }
     if (this.#onlyStack && !log.isOnly()) {
       return this;
