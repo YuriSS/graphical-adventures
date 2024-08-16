@@ -1,9 +1,9 @@
-import { GeneratedData } from "./data-set.mjs";
-import { State } from "./models/state.mjs";
-import { BiVector } from "./models/vector.mjs";
-import { Screen } from "./models/screen.mjs";
-import { DrawLine } from "./components/drawLine/index.mjs";
-import { LogBuilder } from "./infra/log/index.mjs";
+import { GeneratedData } from "../../data-set.mjs";
+import { State } from "../../models/state.mjs";
+import { BiVector } from "../../models/vector.mjs";
+import { Screen } from "../../models/screen.mjs";
+import { DrawLine } from "../../components/drawLine/index.mjs";
+import { LogBuilder } from "../../infra/log/index.mjs";
 
 const state = new State("graph", { screen: new Screen(60) });
 const log = new LogBuilder();
