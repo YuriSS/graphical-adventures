@@ -1,11 +1,10 @@
 import { GeneratedData } from "./data-set.mjs";
-import { logScopeEnum } from "./infra/log.mjs";
 import { State } from "./models/state.mjs";
 import { BiVector } from "./models/vector.mjs";
 import { Screen } from "./models/screen.mjs";
+import { DrawLine } from "./components/drawLine/index.mjs";
 
-const state = new State("graph", { screen: new Screen(200) });
-let running = true;
+const state = new State("graph", { screen: new Screen(60) });
 
 document.body.style.backgroundColor = state.getTheme().getBackgroundColor();
 document.body.style.color = state.getTheme().getForegroundColor();
@@ -13,34 +12,44 @@ document.body.style.color = state.getTheme().getForegroundColor();
 state.getCanvas().width = state.getScreen().values()[0];
 state.getCanvas().height = state.getScreen().values()[1];
 
+const GAP = 100;
+const SEED = 100;
+const MAX_SET = 30;
 const dataGenerator = new GeneratedData();
-const mapDataSetToBiVector = (dataSet) =>
-  dataSet.map((data) => new BiVector(...data));
+let running = true;
+
+const mapDataSetToBiVector = (dataGenerator) => {
+  if (dataGenerator?.constructor !== GeneratedData) {
+    throw new Error("[Map data set to BiVector] Invalid arguments");
+  }
+
+  return dataGenerator
+          .generate(SEED, 1, GAP)
+          .getData()
+          .map((data) => new BiVector(...data));
+};
+
+const dataSet = mapDataSetToBiVector(dataGenerator).concat(mapDataSetToBiVector(dataGenerator)[0].add(new BiVector(GAP, 0)));
+const drawer = new DrawLine();
 
 function draw() {
-  const data = mapDataSetToBiVector(
-    dataGenerator.generate(1000, 100).getData()
-  );
-
   state.ctx().clearRect(0, 0, state.getScreen().vector().x(), state.getScreen().vector().y());
-  data.reduce((previous, current) => {
-    state.log(
-      logScopeEnum.INFO,
-      `Drawing line from ${previous.values().join(', ')} to ${current.values().join(', ')}`
-    );
-
-    state.ctx().beginPath();
-    state.ctx().moveTo(...previous.values());
-    state.ctx().lineTo(...current.values());
-    state.ctx().strokeStyle = state.getTheme().getForegroundColor();
-    state.ctx().stroke();
-    state.ctx().closePath();
-
-    return current;
-  });
-
+  dataSet.reduce(drawer.draw(state));
   if (running) window.requestAnimationFrame(draw);
 }
+
+setInterval(() => {
+  if (!running) return;
+  const next = mapDataSetToBiVector(dataGenerator)[0];
+  if (next === undefined) return;
+  if (dataSet.length >= MAX_SET) {
+    dataSet.splice(0, 1);
+    dataSet.forEach((vector) => {
+      return vector.subtract(new BiVector(GAP, 0));
+    });
+  }
+  dataSet.push(next.add(new BiVector(dataSet.length * GAP, 0)));
+}, 100);
 
 window.requestAnimationFrame(draw);
 
