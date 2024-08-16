@@ -3,7 +3,7 @@ export class BiVector {
 
   constructor(x, y) {
     if (x?.constructor !== Number || y?.constructor !== Number) {
-      throw new Error('Invalid arguments');
+      throw new Error(`[BiVector] Invalid arguments {${x}, ${y}}`);
     }
 
     this.#x = x;
