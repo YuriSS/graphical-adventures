@@ -1,11 +1,16 @@
-import { LogBuilder, logScopeEnum } from "./infra/log.mjs";
+import { State } from "./models/state.mjs";
 
-const logBuilder = new LogBuilder();
+const state = new State("graph");
 
-for (let i = 0; i < 100; i++) {
-  logBuilder.log(logScopeEnum.INFO, `Hello, world! ${i}`);
-}
+document.body.style.backgroundColor = state.getTheme().getBackgroundColor();
+document.body.style.color = state.getTheme().getForegroundColor();
 
-console.log('\n\n\n');
+state.getCanvas().width = state.getScreen().values()[0];
+state.getCanvas().height = state.getScreen().values()[1];
 
-logBuilder.memory();
+state.ctx().beginPath();
+state.ctx().moveTo(0, 0);
+state.ctx().lineTo(100, 100);
+state.ctx().strokeStyle = state.getTheme().getForegroundColor();
+state.ctx().stroke();
+state.ctx().closePath();
