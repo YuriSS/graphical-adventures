@@ -4,13 +4,12 @@ export class LogBuilder {
 
   log = (scope, message) => {
     this.#addLog(scope, message);
-    this.#displayX(this.#logs.length - 1);
+    this.#displayX(0);
   }
 
   memory = () => {
     this.#logs.forEach((_, i) => {
-      const reversedIndex = this.#logs.length - i - 1;
-      this.#displayX(reversedIndex);
+      this.#displayX(i);
     });
   }
 
@@ -22,7 +21,7 @@ export class LogBuilder {
 
   #getLog = (x) => {
     const log = this.#logs[x];
-    if (log.constructor !== Log) {
+    if (log?.constructor !== Log) {
       throw new Error('[LogBuilder] Index out of bounds');
     }
     return log;
@@ -38,7 +37,7 @@ class Log {
   #scope; #message;
 
   constructor(scope, message) {
-    if (scope.constructor !== LogScope || message.constructor !== String) {
+    if (scope?.constructor !== LogScope || message?.constructor !== String) {
       throw new Error('[Log] Invalid arguments');
     }
 
@@ -54,7 +53,7 @@ class LogScope {
   #scope;
 
   constructor(scope) {
-    if (scope.constructor !== String) {
+    if (scope?.constructor !== String) {
       throw new Error('[LogScope] Invalid arguments');
     }
 
