@@ -1,4 +1,4 @@
-export class Vector {
+export class BiVector {
   #x; #y;
 
   constructor(x, y) {

@@ -1,4 +1,4 @@
-import { Vector } from './vector.mjs';
+import { BiVector } from './vector.mjs';
 
 export class Screen {
   #factor; #width; #height;
@@ -15,5 +15,5 @@ export class Screen {
 
   values = () => [this.#width, this.#height];
   plainObject = () => ({ width: this.#width, height: this.#height });
-  vector = () => new Vector(this.#width, this.#height);
+  vector = () => new BiVector(this.#width, this.#height);
 }
