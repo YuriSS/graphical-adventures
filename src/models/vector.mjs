@@ -2,7 +2,7 @@ export class Vector {
   #x; #y;
 
   constructor(x, y) {
-    if (x.constructor !== Number || y.constructor !== Number) {
+    if (x?.constructor !== Number || y?.constructor !== Number) {
       throw new Error('Invalid arguments');
     }
 
