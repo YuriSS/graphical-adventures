@@ -5,7 +5,7 @@ export class Screen {
 
   constructor(factor) {
     this.#factor = 
-      (factor?.constructor !== Number || factor <= 30 || factor > 60)
+      (factor?.constructor !== Number || factor <= 30)
         ? 30
         : factor;
 
