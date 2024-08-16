@@ -26,7 +26,7 @@ export class GeneratedData {
       throw new Error("[Generate randon data] Invalid arguments");
     }
 
-    this.#appLog.only(`Generating data with seed: ${seed}, quantity: ${quantity}, gap: ${gap}`);
+    this.#appLog.info(`Generating data with seed: ${seed}, quantity: ${quantity}, gap: ${gap}`);
 
     const s = Math.min(quantity, gap);
     this.#data = new Array(s).fill(0).map((_, i) => {
