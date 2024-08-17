@@ -8,7 +8,7 @@ export class State {
   #ctx; #canvas;
 
   constructor(canvasId, opts) {
-    const { theme, screen } = new StateProps(opts, this.#logBuilder).getOpts();
+    const { theme, screen } = new StateProps(opts).getOpts();
     this.#theme = theme;
     this.#screen = screen;
 
