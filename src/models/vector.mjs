@@ -16,27 +16,23 @@ export class BiVector {
   plainObject = () => ({ x: this.#x, y: this.#y });
 
   add = (vector) => {
-    this.#x += vector.x();
-    this.#y += vector.y();
-    return this;
+    return new BiVector(this.#x + vector.x(), this.#y + vector.y());
   };
 
   subtract = (vector) => {
-    this.#x -= vector.x();
-    this.#y -= vector.y();
-    return this;
+    return new BiVector(this.#x - vector.x(), this.#y - vector.y());
+  };
+
+  product = (vector) => {
+    return new BiVector(this.#x * vector.x(), this.#y * vector.y());
   };
 
   multiply = (scalar) => {
-    this.#x *= scalar;
-    this.#y *= scalar;
-    return this;
+    return new BiVector(this.#x * scalar, this.#y * scalar);
   };
 
   divide = (scalar) => {
-    this.#x /= scalar;
-    this.#y /= scalar;
-    return this;
+    return new BiVector(this.#x / scalar, this.#y / scalar);
   };
 
   magnitude = () => Math.sqrt(this.#x ** 2 + this.#y ** 2);
