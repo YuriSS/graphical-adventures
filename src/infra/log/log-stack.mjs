@@ -2,13 +2,10 @@ import { logScopeEnum } from "./log-scope.mjs";
 import { Log } from "./log.mjs";
 
 export class LogStack {
-  #logs; #onlyStack = false; #loaded = false;
+  #logs; #onlyStack = false; #loaded = true;
 
   constructor() {
     this.#logs = [new Log(logScopeEnum.INFO, 'LogStack initialized')];
-    setTimeout(() => {
-      this.#loaded = true;
-    }, 100);
   }
 
   unshift = (log) => {
