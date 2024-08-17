@@ -1,10 +1,8 @@
-import { LogBuilder } from "../../infra/log/index.mjs";
 import { State } from "../../models/state/index.mjs";
 import { BiVector } from "../../models/vector/index.mjs";
 
 export class Clock {
   #date; #state; #radius;
-  #logApp = new LogBuilder();
 
   constructor(state, date = new Date(), radius = 220) {
     if (state?.constructor !== State
@@ -17,7 +15,6 @@ export class Clock {
     this.#date = date;
     this.#state = state;
     this.#radius = radius;
-    this.#logApp.only("Clock initialized");
   }
 
   draw = () => {
