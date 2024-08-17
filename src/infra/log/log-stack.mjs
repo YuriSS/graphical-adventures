@@ -14,10 +14,6 @@ export class LogStack {
     }
     if (log.isOnly()) {
       this.#onlyStack = true;
-      this.#logs = [];
-    }
-    if (this.#onlyStack && !log.isOnly()) {
-      return this;
     }
     this.#logs.unshift(log);
     return this
@@ -30,6 +26,9 @@ export class LogStack {
 
   pop = async () => {
     const log = this.#logs.shift();
+    if (this.#onlyStack && !log.isOnly()) {
+      return undefined;
+    }
     return log;
   }
 }
