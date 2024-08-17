@@ -31,8 +31,8 @@ export class ColorScheme {
   getSecondary = () => this.#secondary;
 }
 
-const darkColor = '#021526';
-const lightColor = '#E2E2B6';
+const darkColor = '#151515';
+const lightColor = '#EEEEEE';
 
 export const themeEnum = {
   LIGHT: new Theme('Light theme', new ColorScheme(darkColor, lightColor)),

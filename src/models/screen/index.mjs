@@ -1,4 +1,4 @@
-import { BiVector } from './vector.mjs';
+import { BiVector } from '../vector/index.mjs';
 
 export class Screen {
   #factor; #width; #height;
