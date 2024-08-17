@@ -4,8 +4,6 @@ import { BiVector } from "./models/vector/index.mjs";
 import { Clock } from "./components/clock/index.mjs";
 import { LogBuilder } from "./infra/log/index.mjs";
 
-const log = new LogBuilder();
-log.only("Muted logs");
 const state = new State("graph", { screen: new Screen(60) });
 
 document.body.style.textAlign = 'center';
@@ -18,7 +16,10 @@ state.getCanvas().height = state.getScreen().values()[1];
 normalizeOrigin(state);
 
 function draw() {
-  state.ctx().clearRect(-state.getScreen().vector().x() / 2, -state.getScreen().vector().y() / 2, state.getScreen().vector().x(), state.getScreen().vector().y());
+  state.ctx().clearRect(
+    -state.getScreen().vector().x() / 2,
+    -state.getScreen().vector().y() / 2, state.getScreen().vector().x(), state.getScreen().vector().y()
+  );
   new Clock(state).draw();
   requestAnimationFrame(draw);
 }
