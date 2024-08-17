@@ -1,13 +1,13 @@
 {
-  "name": "cautelinha-ts-graph-lib",
+  "name": "graphical-adventures",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "My graphical exploration of the web",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "python3 -m http.server"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }
