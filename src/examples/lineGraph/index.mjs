@@ -1,8 +1,8 @@
 import { GeneratedData } from "../../data-set.mjs";
 import { logScopeEnum } from "../../infra/log.mjs";
-import { State } from "../../models/state.mjs";
-import { BiVector } from "../../models/vector.mjs";
-import { Screen } from "../../models/screen.mjs";
+import { State } from "../../models/state/index.mjs";
+import { BiVector } from "../../models/vector/index.mjs";
+import { Screen } from "../../models/screen/index.mjs";
 
 const state = new State("graph", { screen: new Screen(200) });
 let running = true;

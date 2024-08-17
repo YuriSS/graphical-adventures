@@ -1,7 +1,7 @@
 import { GeneratedData } from "../../data-set.mjs";
-import { State } from "../../models/state.mjs";
-import { BiVector } from "../../models/vector.mjs";
-import { Screen } from "../../models/screen.mjs";
+import { State } from "../../models/state/index.mjs";
+import { BiVector } from "../../models/vector/index.mjs";
+import { Screen } from "../../models/screen/index.mjs";
 import { DrawLine } from "../../components/drawLine/index.mjs";
 import { LogBuilder } from "../../infra/log/index.mjs";
 

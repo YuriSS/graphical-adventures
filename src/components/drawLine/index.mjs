@@ -1,6 +1,6 @@
-import { BiVector } from "../../models/vector.mjs";
+import { BiVector } from "../../models/vector/index.mjs";
 import { LogBuilder } from "../../infra/log/index.mjs";
-import { State } from "../../models/state.mjs";
+import { State } from "../../models/state/index.mjs";
 
 export class DrawLine {
   #logApp;
