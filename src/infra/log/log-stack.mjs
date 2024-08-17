@@ -2,7 +2,7 @@ import { logScopeEnum } from "./log-scope.mjs";
 import { Log } from "./log.mjs";
 
 export class LogStack {
-  #logs; #onlyStack = false; #loaded = true;
+  #logs; #onlyStack = false;
 
   constructor() {
     this.#logs = [new Log(logScopeEnum.INFO, 'LogStack initialized')];
@@ -29,9 +29,6 @@ export class LogStack {
   }
 
   pop = async () => {
-    if (!this.#loaded) {
-      return undefined;
-    }
     const log = this.#logs.shift();
     return log;
   }
